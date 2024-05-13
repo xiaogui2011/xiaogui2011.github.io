@@ -8,19 +8,19 @@ layout: post
 ---
 
 
-# 文章头部配置信息
+## 文章头部配置信息
 
 xxx
 
-# 推荐的主题
+## 推荐的主题
 xxx
 
-# 全局搜索
+## 全局搜索
 xxx
 
 
 
-# 文章目录结构
+## 文章目录结构
 [jekll + chirpy 打造个人博客](https://www.tangzhexuan.com/posts/jekyll+chirpy%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/)
 
 ```markdown
@@ -37,7 +37,7 @@ pin: true
 [write-a-new-post.md]()
 
 
-# 注意事项
+## 注意事项
 
 文章的名称必须符合规范
 
