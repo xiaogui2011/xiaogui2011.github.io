@@ -10,9 +10,7 @@ layout: post
 
 ## 小米密码锁
 
-{% embed url="https://item.jd.com/100008764851.html" %}
-
-[]()
+[小米密码锁购买链接](https://passport.jd.com/new/login.aspx?ReturnUrl=https%3A%2F%2Fitem.jd.com%2F100008764851.html&czLogin=1)
 
 缺点: 无法远程查看锁子状态, 或者日志
 
