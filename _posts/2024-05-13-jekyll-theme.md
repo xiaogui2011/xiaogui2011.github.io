@@ -1,9 +1,9 @@
 ---
-title: jekyll-theme 使用方法
-date: 2024-05-13 22:05:56
-tags: Jekyll, jekyll-theme
+title: jekyll-theme
+date: 2024-05-13 22:05:56  +0800
 author: john
 categories: [博客搭建, 使用规范]
+tags: Jekyll, jekyll-theme, 博客
 layout: post
 ---
 
