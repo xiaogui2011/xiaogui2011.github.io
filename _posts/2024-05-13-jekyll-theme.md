@@ -3,6 +3,7 @@ title: jekyll-theme 使用方法
 date: 2024-05-13 22:05:56
 tags: Jekyll, jekyll-theme
 author: john
+categories: [博客搭建, 使用规范]
 layout: post
 ---
 
@@ -17,7 +18,20 @@ layout: post
 
 
 # 文章目录结构
+[jekll + chirpy 打造个人博客](https://www.tangzhexuan.com/posts/jekyll+chirpy%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/)
 
+```markdown
+  ---
+title: Getting Started
+author: Cotes Chung
+date: 2019-08-09 20:55:00 +0800
+categories: [Blogging, Tutorial]
+tags: [getting started]
+pin: true
+  ---
+```
+
+[write-a-new-post.md]()
 
 
 # 注意事项
@@ -30,4 +44,3 @@ layout: post
 2016-06-04-hello-world.md
 2017-08-18-writing-blogs.markdown
 ```
-
