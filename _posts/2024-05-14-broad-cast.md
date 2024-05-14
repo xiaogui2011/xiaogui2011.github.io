@@ -2,7 +2,7 @@
 title: 播客
 date: 2024-05-14 23:30:48 +0800
 author: john
-categories: [书影， 播客]
+categories: [书影, 播客]
 tags: 播客
 layout: post
 ---

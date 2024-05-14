@@ -2,7 +2,7 @@
 title: 《霍乱时期的爱情》
 date: 2024-05-14 23:30:48 +0800
 author: john
-categories: [书影， 图书]
+categories: [书影, 图书]
 tags: book
 layout: post
 ---
