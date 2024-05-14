@@ -1,0 +1,11 @@
+---
+title: 家庭组网
+date: 2024-05-14 11:19:45 +0800
+author: john
+categories: [装修, 网络]
+tags: oneRiver, 网络, 软路由
+layout: post
+---
+
+
+[视频资料](CloudDocs/视频/家庭网络)
