@@ -3,7 +3,7 @@ title: 有趣的视频
 date: 2024-05-14 23:30:48 +0800
 author: john
 categories:
-tags: 视频, 有趣
+tags: 视频 有趣
 layout: post
 ---
 

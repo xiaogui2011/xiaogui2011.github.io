@@ -3,7 +3,7 @@ title: 密码锁
 date: 2024-05-13 22:58:21   +0800
 author: john
 categories: [电子产品, 锁子]
-tags: 电子产品, 智能家居
+tags: 电子产品 智能家居
 layout: post
 ---
 
