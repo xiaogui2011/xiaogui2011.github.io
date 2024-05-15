@@ -52,3 +52,76 @@ pin: true
 ## 注意事项二级目录
 2222
 
+## 自动生成文件的源数据
+
+[Jekyll 自动生成文章](https://blog.csdn.net/freehyan/article/details/51879554)
+
+[使用rake自动生成文件](https://jinguoxing.github.io/jekyll/rake/2015/06/01/jekyll-github-pages/)
+```shell
+(base) 0 10:41:13 z:/tmp $sudo gem install rake
+Fetching rake-13.2.1.gem
+Successfully installed rake-13.2.1
+Parsing documentation for rake-13.2.1
+Installing ri documentation for rake-13.2.1
+Done installing documentation for rake after 1 seconds
+1 gem installed
+```
+
+```shell
+(base) 0 10:50:48 z:xiaogui2011.github.io $rake post title="追更"    
+/System/Library/Frameworks/Ruby.framework/Versions/2.6/usr/lib/ruby/2.6.0/universal-darwin22/rbconfig.rb:21: warning: Insecure world writable dir /Users/zhangzhiyuan/go/pkg/mod/golang.org in PATH, mode 040777
+rake aborted!
+No Rakefile found (looking for: rakefile, Rakefile, rakefile.rb, Rakefile.rb)
+/Library/Ruby/Gems/2.6.0/gems/rake-13.2.1/exe/rake:27:in `<top (required)>'
+(See full trace by running task with --trace)
+```
+
+## 需要rakefile
+
+
+[使用Rakefile实现文章生成器](https://lllovol.com/p/rake/)
+
+```shell
+touch Rakefile
+```
+
+```
+task :default => :new
+
+require 'fileutils'
+
+desc "创建新 post"
+task :new do
+  puts "请输入要创建的文章文件文件名字："
+    @url = STDIN.gets.chomp
+    puts "请输入文章的标题："
+    @name = STDIN.gets.chomp
+    puts "请输入文章的子标题："
+    @slug = STDIN.gets.chomp
+    puts "请输入文章的分类，以空格分隔："
+    @categories = STDIN.gets.chomp
+    puts "请输入文章的标签："
+    @tag = STDIN.gets.chomp
+    @slug = "#{@url}"
+    @slug = @slug.downcase.strip.gsub(' ', '-')
+    @date = Time.now.strftime("%F")
+    @post_name = "_posts/#{@date}-#{@slug}.md"
+    if File.exist?(@post_name)
+            abort("文件名已经存在！创建失败")
+    end
+    FileUtils.touch(@post_name)
+    open(@post_name, 'a') do |file|
+            file.puts "---"
+            file.puts "layout: post"
+            file.puts "title: #{@name}"
+            file.puts "slug: #{@slug}"
+            file.puts "author: ymkNK"
+            file.puts "date: #{Time.now}"
+            file.puts "categories: #{@categories}"
+            file.puts "tags: #{@tag}"
+            file.puts "img: 1.jpg"
+            file.puts "---"
+    end
+    exec "vim #{@post_name}"
+end
+```
