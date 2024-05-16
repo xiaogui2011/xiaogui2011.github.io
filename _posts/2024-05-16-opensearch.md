@@ -78,3 +78,9 @@ spec:
 curl -k -u admin:1ULUcSm^aYzY6U https://127.0.0.1:9200
 ```
 
+
+
+## k8s 部署 jaeger
+
+jaeger连接opensearch
+
