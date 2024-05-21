@@ -10,8 +10,6 @@ img: 1.jpg
 ---
 
 
-# jetbrains
-
 ## 远程开发
 
 ##
