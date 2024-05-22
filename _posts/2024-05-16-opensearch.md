@@ -102,7 +102,108 @@ status:
   loadBalancer: {}
 ```
 
-## 现有环境
+## k8s部署jaeger
+jaeger-deployment.yaml
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jaegerAndOpensearch
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+  namespace: jaegerAndOpensearch
+spec:
+  ports:
+    - port: 5775
+      protocol: UDP
+      targetPort: 5775
+      name: jaeger-agent-compact
+    - port: 6831
+      protocol: UDP
+      targetPort: 6831
+      name: jaeger-agent-binary
+    - port: 6832
+      protocol: UDP
+      targetPort: 6832
+      name: jaeger-agent-compact
+    - port: 5778
+      protocol: TCP
+      targetPort: 5778
+      name: jaeger-agent-config
+    - port: 16686
+      protocol: TCP
+      targetPort: 16686
+      name: jaeger-query
+    - port: 14268
+      protocol: TCP
+      targetPort: 14268
+      name: jaeger-collector-http
+    - port: 14250
+      protocol: TCP
+      targetPort: 14250
+      name: jaeger-collector-grpc
+    - port: 9411
+      protocol: TCP
+      targetPort: 9411
+      name: zipkin
+  selector:
+    app: jaeger
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jaeger
+  namespace: jaegerAndOpensearch 
+  labels:
+    app: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jaeger
+  template:
+    metadata:
+      labels:
+        app: jaeger
+    spec:
+      containers:
+      - name: jaeger
+        image: dockerhub.kubekey.local/wwmonitor/all-in-one:latest
+        ports:
+        - containerPort: 5775
+          protocol: UDP
+        - containerPort: 6831
+          protocol: UDP
+        - containerPort: 6832
+          protocol: UDP
+        - containerPort: 5778
+          protocol: TCP
+        - containerPort: 16686
+          protocol: TCP
+        - containerPort: 14268
+          protocol: TCP
+        - containerPort: 14250
+          protocol: TCP
+        - containerPort: 9411
+          protocol: TCP
+        env:
+        - name: COLLECTOR_ZIPKIN_HTTP_PORT
+          value: "9411"
+        - name: SPAN_STORAGE_TYPE
+          value: "elasticsearch"
+        - name: ES_SERVER_URLS
+          value: "http://opensearch:9200"
+        - name: ES_INDEX_PREFIX
+          value: "jaeger"
+```
+
+## 现有参考环境
 
 [现有环境](http://127.0.0.1:30883/jaeger/ui/search)
  
@@ -423,3 +524,5 @@ func initTracer() (trace.TracerProvider, error) {
 ## TODO 使用教程研究
 
 - 在OpenSearch Dashboards中查看存储的追踪数据。
+
+
