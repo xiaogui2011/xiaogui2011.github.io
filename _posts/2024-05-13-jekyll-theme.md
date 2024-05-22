@@ -125,3 +125,11 @@ task :new do
     exec "vim #{@post_name}"
 end
 ```
+
+
+## 注释
+
+```markdown
+Sun
+: the star around which the earth orbits
+```
