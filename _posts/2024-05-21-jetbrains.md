@@ -4,7 +4,7 @@ title: jetbrains
 slug: jetbrains
 author: ymkNK
 date: 2024-05-21 22:49:56 +0800
-categories: [code, 开发工具]
+categories: [开发, 开发工具]
 tags: 工具 IDE
 img: 1.jpg
 ---
