@@ -133,3 +133,20 @@ end
 Sun
 : the star around which the earth orbits
 ```
+
+## 引用颜色框
+[引用颜色框](https://raw.githubusercontent.com/cotes2020/jekyll-theme-chirpy/master/_posts/2019-08-08-text-and-typography.md)
+
+```
+> An example showing the `tip` type prompt. 绿色
+{: .prompt-tip }
+
+> An example showing the `info` type prompt. 蓝色
+{: .prompt-info }
+
+> An example showing the `warning` type prompt. 黄色
+{: .prompt-warning }
+
+> An example showing the `danger` type prompt. 红色
+{: .prompt-danger }
+```
