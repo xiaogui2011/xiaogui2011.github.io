@@ -135,7 +135,10 @@ Sun
 ```
 
 ## 引用颜色框
+
 [引用颜色框](https://raw.githubusercontent.com/cotes2020/jekyll-theme-chirpy/master/_posts/2019-08-08-text-and-typography.md)
+
+[效果](https://chirpy.cotes.page/posts/text-and-typography/)
 
 ```
 > An example showing the `tip` type prompt. 绿色
