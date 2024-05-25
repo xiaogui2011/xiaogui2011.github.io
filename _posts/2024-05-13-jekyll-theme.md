@@ -153,3 +153,65 @@ Sun
 > An example showing the `danger` type prompt. 红色
 {: .prompt-danger }
 ```
+
+## 开启评论区
+
+当然可以开启评论区。根据你提供的配置文件，你可以选择使用三种评论系统：Disqus、Utterances 或 Giscus。以下是每种评论系统的配置步骤：
+
+### 使用 Disqus
+Disqus 是一个流行的评论系统，可以轻松集成到 Jekyll 网站中。需要在 Disqus 上注册并获取一个 shortname。
+
+1. 在 Disqus 网站上注册并创建一个站点（如果你还没有）。
+2. 获取你的 Disqus shortname。
+3. 在你的配置文件中找到 `comments` 部分，填写如下：
+
+```yaml
+comments:
+  provider: disqus
+  disqus:
+    shortname: your_disqus_shortname
+```
+
+将 `your_disqus_shortname` 替换为你从 Disqus 获取的 shortname。
+
+### 使用 Utterances
+Utterances 使用 GitHub issues 作为评论系统，需要你有一个 GitHub 仓库来存储评论。
+
+1. 创建一个 GitHub 仓库（如果你还没有）。
+2. 在配置文件中找到 `comments` 部分，填写如下：
+
+```yaml
+comments:
+  provider: utterances
+  utterances:
+    repo: your_github_username/your_repo_name
+    issue_term: pathname
+```
+
+将 `your_github_username/your_repo_name` 替换为你的 GitHub 用户名和仓库名称。
+
+### 使用 Giscus
+Giscus 也是基于 GitHub issues 的评论系统，配置稍微复杂一些。
+
+1. 访问 [Giscus](https://giscus.app/) 并按照步骤设置。
+2. 获取必要的 `repo`、`repo_id`、`category` 和 `category_id` 信息。
+3. 在配置文件中找到 `comments` 部分，填写如下：
+
+```yaml
+comments:
+  provider: giscus
+  giscus:
+    repo: your_github_username/your_repo_name
+    repo_id: your_repo_id
+    category: your_category_name
+    category_id: your_category_id
+    mapping: pathname
+    strict: 0
+    input_position: bottom
+    lang: en
+    reactions_enabled: 1
+```
+
+将 `your_github_username/your_repo_name`、`your_repo_id`、`your_category_name` 和 `your_category_id` 替换为从 Giscus 获取的信息。
+
+完成以上步骤后，保存配置文件并重新构建你的 Jekyll 网站。这样就可以在文章页面中启用评论区了。
