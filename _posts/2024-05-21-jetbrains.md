@@ -20,11 +20,11 @@ img: 1.jpg
 
 远程路径
 
-![img_5.png](img_5.png)
+![img_5.png](../assets/img/img_5.png)
 
 本地路径
 
-![img_6.png](img_6.png)
+![img_6.png](../assets/img/img_6.png)
 
 
 
