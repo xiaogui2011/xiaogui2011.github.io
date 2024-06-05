@@ -18,3 +18,21 @@ img: 1.jpg
 
 [golang教程](https://www.topgoer.com/)
 
+
+## concurrent map read and map write
+
+[Golang fatal error: concurrent map read and map write](https://stackoverflow.com/questions/45585589/golang-fatal-error-concurrent-map-read-and-map-write)
+
+
+## go run -race server.go
+
+`go run -race server.go` 是用来运行 Go 程序并启用数据竞争检测的。
+数据竞争（data race）是指多个 goroutine 同时访问相同的内存位置，并且至少有一个 goroutine 执行写操作，而这些操作没有进行适当的同步。
+当你的程序存在数据竞争时，可能会导致难以预测的行为和错误。
+
+
+
+
+> go run -race server.go
+{: .prompt-danger }
+
