@@ -91,3 +91,5 @@ func NewPartitionConsumer(kfkConfig config.Kafka, topic string, partition int32)
 	return nil, fmt.Errorf("failed to consume partition after %d retries", maxRetries)
 }
 ```
+
+[//]: # (TODO 添加kafka消费者组)

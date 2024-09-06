@@ -42,14 +42,15 @@ Home Assistant 是一个开源的智能家居平台，旨在本地化管理和�
 独立的开源智能家居平台
 
 
-## home slicon 安装 assistant
+## apple slicon 安装 home assistant
 [[教學] Home Assistant 的安裝方式 - 4. Apple Silicon Mac](https://forum.automata.id/t/topic/334)
 
 
+## nas docker 安装 home assistant
 
+[利用群晖NAS搭建homeassistant，把米家设备免费接入苹果智能家居HomeKit家庭APP中](https://www.bilibili.com/read/cv15218836/)
 
 ### docker 听说有问题
-
 
 
 
@@ -58,3 +59,58 @@ Home Assistant 是一个开源的智能家居平台，旨在本地化管理和�
 
 1. hey siri， 打开小米电视
 2. 
+
+
+
+
+## 教程
+### 智能家居Home Assistant搭建从入门到入坑
+
+[智能家居Home Assistant搭建从入门到入坑](https://www.bilibili.com/video/BV1UV411273h/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
+
+#### 为什么需要homeassistant
+
+节假日都不可能准确获取, 假如用传统的智能家居, 不准确, 基本按照周几固定
+
+不能做到只能弹性的起床时间, 实时监测路况
+
+**不能因为只能选择了质量一般的产品**, 但是传统的智能家居, 很多都是标准化质量的低端产品, 无法接入到现有的生态
+- 难道什么东西都是小米的做的最好吗
+
+#### 注意事项
+
+24小时后台执行的
+
+#### 自动搜刮出互联网设备
+小米的需要key,或者token
+
+
+#### 推荐路由器
+
+梅林固件的华硕路由器
+
+
+#### HACS
+应用商店, 就像苹果的APPStore
+
+
+###  群辉NAS搭建HomeAssistant
+[利用群晖NAS搭建homeassistant，米家设备免费接入HomeKit](https://www.bilibili.com/video/BV1rS4y1C7nk/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
+
+
+
+
+### 用威联通NAS搭建HomeAssistant
+[用威联通NAS搭建HomeAssistant把米家设备接入HomeKit｜HomeAssistant搭建教程｜智能家居](https://www.bilibili.com/video/BV1u34y1E7aP/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320) 
+
+#### NAS推荐
+
+威联通TS-564
+
+硬盘是: 东芝N300
+
+
+
+## 官方文档
+[官方文档](https://www.home-assistant.io/installation/macos)
+
