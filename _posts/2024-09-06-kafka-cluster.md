@@ -4,8 +4,8 @@ title: kafka-cluster
 slug: kafka-cluster
 author: ymkNK
 date: 2024-09-06 15:12:59 +0800
-categories: 
-tags: 
+categories: [开发, 中间键, kafka]
+tags: [kafka, 中间键, 消息队列]
 img: 1.jpg
 ---
 

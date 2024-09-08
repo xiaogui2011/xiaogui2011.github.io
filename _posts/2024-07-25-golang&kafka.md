@@ -5,7 +5,7 @@ slug: golang&kafka
 author: ymkNK
 date: 2024-07-25 00:09:24 +0800
 categories: [开发, golang]
-tags: [goroutine， golang]
+tags: [goroutine， golang,kafka, 中间键, 消息队列]
 img: 1.jpg
 ---
 
