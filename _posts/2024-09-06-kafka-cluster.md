@@ -3,152 +3,220 @@ layout: post
 title: kafka-cluster
 slug: kafka-cluster
 author: ymkNK
-date: 2024-09-06 15:12:59 +0800
+date: 2024-09-10 23:10:59 +0800
 categories: [开发, 中间键, kafka]
 tags: [kafka, 中间键, 消息队列]
 img: 1.jpg
 ---
 
+## 部署集群
+[参考视频](https://www.bilibili.com/video/BV1Ne4y1i7bg/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
 
-## 集群部署
-
-### 离线docker部署
-
-### 离线配置文件
-
-## docker-compose
-### node1
+### kraft sasl-512 集群
+node1
 ```yaml
-version: '2'
-
+version: '3'
 services:
-  kafka:
-    image: 'bitnami/kafka:3.7.0'
-    container_name: kafka-1
-    ports:
-      - "9092:9092"  # Kafka 客户端通信端口
-      - "9093:9093"  # Kafka Controller 通信端口
-    restart: always
+  kafka-node2:
+    image: bitnami/kafka:3.7.0
+    user: root
+    container_name: kafka-node1
     environment:
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_NODE_ID=1
-      - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CLIENT_LISTENER_NAME=CLIENT
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=broker, controller
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://10.130.9.36:9092
+      - KAFKA_CFG_LISTENERS=CLIENT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,CLIENT:SASL_PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://10.130.9.36:9092
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_KRAFT_CLUSTER_ID=manongdashu66666666666
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
-      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=SCRAM-SHA-512
+      - ALLOW_PLAINTEXT_LISTENER=no
       - KAFKA_CFG_SASL_ENABLED_MECHANISMS=SCRAM-SHA-512
+      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=SCRAM-SHA-512
+      - KAFKA_CFG_SUPER_USERS=User:test
+      - KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND=false
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
       - KAFKA_CLIENT_USERS=test
       - KAFKA_CLIENT_PASSWORDS=123456
-      - KAFKA_LOG_RETENTION_HOURS=24
-      - KAFKA_LOG_SEGMENT_BYTES=1073741824
-      - KAFKA_LOG_RETENTION_BYTES=10737418240
-      - KAFKA_CFG_MESSAGE_MAX_BYTES=104857600
-      - KAFKA_CFG_REPLICA_FETCH_MAX_BYTES=104857600
-      - KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES=104857600
-    volumes:
-      - "/data/docker/kafka/kafka_data:/bitnami"
-    networks:
-      - kafka_net
 
-networks:
-  kafka_net:
-    driver: bridge
+    volumes:
+      - /data/kafka/kraft:/bitnami/kafka:rw
+    network_mode: host
+```
+
+node2
+```yaml
+version: '3'
+services:
+  kafka-node2:
+    image: bitnami/kafka:3.7.0
+    user: root
+    container_name: kafka-node2
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=broker, controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=CLIENT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,CLIENT:SASL_PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://10.130.9.50:9092
+      - KAFKA_BROKER_ID=2
+      - KAFKA_CFG_NODE_ID=2
+      - KAFKA_KRAFT_CLUSTER_ID=manongdashu66666666666
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
+      - ALLOW_PLAINTEXT_LISTENER=no
+      - KAFKA_CFG_SASL_ENABLED_MECHANISMS=SCRAM-SHA-512
+      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=SCRAM-SHA-512
+      - KAFKA_CFG_SUPER_USERS=User:test
+      - KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND=false
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CLIENT_USERS=test
+      - KAFKA_CLIENT_PASSWORDS=123456
+    volumes:
+      - /data/kafka/kraft:/bitnami/kafka:rw
+    network_mode: host
 ```
 
 
-### node2
+node3
 ```yaml
-version: '2'
-
+version: '3'
 services:
-  kafka:
-    image: 'bitnami/kafka:3.7.0'
-    container_name: kafka-1
-    ports:
-      - "9092:9092"  # Kafka 客户端通信端口
-      - "9093:9093"  # Kafka Controller 通信端口
-    restart: always
+  kafka-node2:
+    image: bitnami/kafka:3.7.0
+    user: root
+    container_name: kafka-node3
     environment:
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_NODE_ID=1
-      - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CLIENT_LISTENER_NAME=CLIENT
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=broker, controller
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,CONTROLLER://:9093
-      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://10.130.9.36:9092
+      - KAFKA_CFG_LISTENERS=CLIENT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,CLIENT:SASL_PLAINTEXT
-      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
-      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=SCRAM-SHA-512
-      - KAFKA_CFG_SASL_ENABLED_MECHANISMS=SCRAM-SHA-512
-      - KAFKA_CLIENT_USERS=test
-      - KAFKA_CLIENT_PASSWORDS=123456
-      - KAFKA_LOG_RETENTION_HOURS=24
-      - KAFKA_LOG_SEGMENT_BYTES=1073741824
-      - KAFKA_LOG_RETENTION_BYTES=10737418240
-      - KAFKA_CFG_MESSAGE_MAX_BYTES=104857600
-      - KAFKA_CFG_REPLICA_FETCH_MAX_BYTES=104857600
-      - KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES=104857600
-    volumes:
-      - "/data/docker/kafka/kafka_data:/bitnami"
-    networks:
-      - kafka_net
-
-networks:
-  kafka_net:
-    driver: bridge
-```
-
-
-
-### node3
-
-```shell
-version: '2'
-
-services:
-  kafka:
-    image: 'bitnami/kafka:3.7.0'
-    container_name: kafka-3
-    ports:
-      - "9092:9092"
-      - "9093:9093"
-    restart: always
-    environment:
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_NODE_ID=3
-      - KAFKA_CFG_PROCESS_ROLES=controller,broker
-      - KAFKA_CLIENT_LISTENER_NAME=CLIENp - 4 as T
-      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
-      - KAFKA_CFG_LISTENERS=CLIENT://:9092,CONTROLLER://:9093
       - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://10.130.9.87:9092
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,CLIENT:SASL_PLAINTEXT
+      - KAFKA_BROKER_ID=3
+      - KAFKA_CFG_NODE_ID=3
+      - KAFKA_KRAFT_CLUSTER_ID=manongdashu66666666666
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
-      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=SCRAM-SHA-512
+      - ALLOW_PLAINTEXT_LISTENER=no
       - KAFKA_CFG_SASL_ENABLED_MECHANISMS=SCRAM-SHA-512
+      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=SCRAM-SHA-512
+      - KAFKA_CFG_SUPER_USERS=User:test
+      - KAFKA_CFG_ALLOW_EVERYONE_IF_NO_ACL_FOUND=false
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
       - KAFKA_CLIENT_USERS=test
       - KAFKA_CLIENT_PASSWORDS=123456
-      - KAFKA_LOG_RETENTION_HOURS=24
-      - KAFKA_LOG_SEGMENT_BYTES=1073741824
-      - KAFKA_LOG_RETENTION_BYTES=10737418240
-      - KAFKA_CFG_MESSAGE_MAX_BYTES=104857600
-      - KAFKA_CFG_REPLICA_FETCH_MAX_BYTES=104857600
-      - KAFKA_CFG_SOCKET_REQUEST_MAX_BYTES=104857600
     volumes:
-      - "/data/docker/kafka/kafka_data:/bitnami"
+      - /data/kafka/kraft:/bitnami/kafka:rw
+    network_mode: host
+```
+
+
+### kraft plaintext 集群
+
+
+node1
+```yaml
+version: '3'
+services:
+  kafka-node2:
+    image: bitnami/kafka:3.7.0
+    user: root
+    container_name: kafka-node1
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=broker, controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://10.130.9.36:9092
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_KRAFT_CLUSTER_ID=manongdashu66666666666
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    volumes:
+      - /data/kafka/kraft:/bitnami/kafka:rw
+    network_mode: host
+```
+
+node2
+```yaml
+version: '3'
+services:
+  kafka-node2:
+    image: bitnami/kafka:3.7.0
+    user: root
+    container_name: kafka-node2
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=broker, controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://10.130.9.50:9092
+      - KAFKA_BROKER_ID=2
+      - KAFKA_CFG_NODE_ID=2
+      - KAFKA_KRAFT_CLUSTER_ID=manongdashu66666666666
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    volumes:
+      - /data/kafka/kraft:/bitnami/kafka:rw
+    network_mode: host
+```
+
+node3
+
+```yaml
+version: '3'
+services:
+  kafka-node2:
+    image: bitnami/kafka:3.7.0
+    user: root
+    container_name: kafka-node3
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=broker, controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://10.130.9.87:9092
+      - KAFKA_BROKER_ID=3
+      - KAFKA_CFG_NODE_ID=3
+      - KAFKA_KRAFT_CLUSTER_ID=manongdashu66666666666
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@10.130.9.36:9093,2@10.130.9.50:9093,3@10.130.9.87:9093
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    volumes:
+      - /data/kafka/kraft:/bitnami/kafka:rw
+    network_mode: host
+```
+
+
+
+## 部署kafaka-ui
+```yaml
+ kafka-ui:
+    image: provectuslabs/kafka-ui:master
+    container_name: kafka-ui
+    ports:
+      - "8910:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - DYNAMIC_CONFIG_ENABLED=true
+      - AUTH_TYPE=LOGIN_FORM
+      - SPRING_SECURITY_USER_NAME=admin
+      - SPRING_SECURITY_USER_PASSWORD=admin
+    depends_on:
+      - kafka
     networks:
       - kafka_net
 
 networks:
   kafka_net:
-    driver: bridge
+    driver: bridge	  
 ```
+
 
 ## 文件夹和权限
 ```shell
@@ -173,27 +241,11 @@ authorizer.class.name=kafka.security.auth.SimpleAclAuthorizer
 ```
 
 
-## 传输镜像和配置
 
-
-
-
-## 执行命令
+## docker-compose
 ```shell
 docker-compose up -d
 ```
-
-
-
-
-
-
-
-
-
-### server
-
-
 
 
 ## 配置以及测试
