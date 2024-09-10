@@ -9,6 +9,67 @@ tags: [kafka, 中间键, 消息队列]
 img: 1.jpg
 ---
 
+## 部署单节点
+[3.1 使用 KRaft 模式单机安装（SASL/PLAIN 认证方式）](https://blog.csdn.net/qq_38263083/article/details/133313443)
+
+
+
+
+### kraft sasl-512 单节点
+```yaml
+version: "3"
+
+services:
+  kafka:
+    image: 'bitnami/kafka:3.7.0'
+    container_name: kafka
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+    restart: always
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_NODE_ID=0
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CLIENT_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=CLIENT
+      - KAFKA_CFG_LISTENERS=CLIENT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=CLIENT://192.168.173.129:9092
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,CLIENT:SASL_PLAINTEXT
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+      - KAFKA_CFG_SASL_MECHANISM_INTER_BROKER_PROTOCOL=PLAIN
+      - KAFKA_CFG_SASL_ENABLED_MECHANISMS=PLAIN
+      - KAFKA_CLIENT_USERS=test
+      - KAFKA_CLIENT_PASSWORDS=123456
+    volumes:
+      - "/data/docker/kafka/kafka_data:/bitnami"
+    networks:
+      - kafka_net
+
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:master
+    container_name: kafka-ui
+    ports:
+      - "8910:8080"
+    restart: always
+    environment:
+      - KAFKA_CLUSTERS_0_NAME=local
+      - DYNAMIC_CONFIG_ENABLED=true
+      - AUTH_TYPE=LOGIN_FORM
+      - SPRING_SECURITY_USER_NAME=admin
+      - SPRING_SECURITY_USER_PASSWORD=admin
+    depends_on:
+      - kafka
+    networks:
+      - kafka_net
+
+networks:
+  kafka_net:
+    driver: bridge	
+```
+
 ## 部署集群
 [参考视频](https://www.bilibili.com/video/BV1Ne4y1i7bg/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
 
