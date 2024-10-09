@@ -11,9 +11,9 @@ img: 1.jpg
 
 ## 参考
 
-[智能家居 | HomeKit全屋智能家居的搭建 | 把家装进iPhone13 · 超长干货](https://www.bilibili.com/video/BV1XL41137kP/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
+[智能家居 . HomeKit全屋智能家居的搭建 . 把家装进iPhone13 · 超长干货](https://www.bilibili.com/video/BV1XL41137kP/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
 
-[智能家居2.0 | 米家天猫如何接入苹果HomeKit | Home Bridge | Home Assistant | 使用教程](https://www.bilibili.com/video/BV1pb4y1B7c8/?spm_id_from=333.999.0.0)
+[智能家居2.0 . 米家天猫如何接入苹果HomeKit . Home Bridge . Home Assistant . 使用教程](https://www.bilibili.com/video/BV1pb4y1B7c8/?spm_id_from=333.999.0.0)
 
 
 ## HomeKit 
