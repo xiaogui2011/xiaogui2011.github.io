@@ -42,6 +42,51 @@ Home Assistant 是一个开源的智能家居平台，旨在本地化管理和�
 独立的开源智能家居平台
 
 
+## PVE安装 home assistant
+
+https://github.com/home-assistant/operating-system
+
+pve支持的两种格式
+- haos_generic-x86-64-13.2.rc1.img.xz
+- haos_ova-13.1.qcow2.xz
+
+PVE上传镜像
+
+分离硬盘scsi0
+
+删除CDROM
+
+qm importdisk 编号 文件位置 local-lvm
+
+总线设备使用IDE
+
+启动方式UEFI但是不添加EFI磁盘
+
+网络设备使用Intel E1000
+
+引导顺序NET的就不要了
+
+部署好以后做一个系统备份
+
+接入品牌
+- 小米
+- 涂鸦
+- yeelight
+- Aqara
+- 自制的传感器
+
+[瀚思彼岸论坛](https://bbs.hassbian.com/thread-24065-1-1.html)
+
+冬瓜HA的改版系统
+
+打开QEMU代理
+
+查看进度
+ha-install -t
+
+
+
+
 ## apple slicon 安装 home assistant
 [[教學] Home Assistant 的安裝方式 - 4. Apple Silicon Mac](https://forum.automata.id/t/topic/334)
 
