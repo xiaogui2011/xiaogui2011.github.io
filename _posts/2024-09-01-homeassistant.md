@@ -43,31 +43,114 @@ Home Assistant 是一个开源的智能家居平台，旨在本地化管理和�
 
 
 ## PVE安装 home assistant
+### 依赖文件
+proxmox-ve_8.2-2.iso
 
-https://github.com/home-assistant/operating-system
+haos_ova-9.3.qcow2.xz
 
-pve支持的两种格式
-- haos_generic-x86-64-13.2.rc1.img.xz
-- haos_ova-13.1.qcow2.xz
+### 成功案例
+[在PVE下安裝Home Assistant](https://medium.com/%E5%BD%BC%E5%BE%97%E6%BD%98%E7%9A%84-swift-ios-app-%E9%96%8B%E7%99%BC%E6%95%99%E5%AE%A4/%E5%9C%A8pve%E4%B8%8B%E5%AE%89%E8%A3%9Dhome-assistant-b6c056678435)
 
-PVE上传镜像
+> eMMC是什么
+{: .prompt-warning }
 
-分离硬盘scsi0
+### homeassitant前置准备
+```markdown
+首先登入 PVE 的 webUI，右上角有一個 Create VM（創建虛擬機），接著，你會在 General 看到預設的 VM ID，可以不用更改它，Name 為虛擬機取一個名稱，下一步。
 
-删除CDROM
+在 OS，選擇 Do not use any media，下一步。
+在 System，BIOS 選擇 OVMF（UEFI），下一步。
+在 Hard Disk，下一步，因為這個預設的 HD 是將來要 detach 後刪除的，我們會另外導入有 Home Assistant 映像檔的 HD。
+在 CPU，Cores 可以選擇 2，即是雙核心。
+在 Memory，選擇 2048 MB。
+在 Network，Model 選擇 VirtIO（paravirtualized）或 Intel E1000 都可以。
+```
 
-qm importdisk 编号 文件位置 local-lvm
+![img_2.png](img_2.png)
 
-总线设备使用IDE
+**先忽略 Unused Disk 0，點到剛才的 Hard Disk（scsi0），detach 後 Remove。**
 
-启动方式UEFI但是不添加EFI磁盘
 
-网络设备使用Intel E1000
+### .qcow2
 
-引导顺序NET的就不要了
+前往homeassistant官网下载 KVM对应的镜像, [链接](https://www.home-assistant.io/installation/linux#download-the-appropriate-image)
 
-部署好以后做一个系统备份
+> 如 .vmdk，這適用於 ESXi 的檔案，就必須要轉檔。
 
+
+### 上传.qcow2至PVE
+
+scp XX pveIP
+
+
+### 转换镜像格式挂载至前置
+```shell
+qm importdisk 101 hassos_ova-4.11.qcow2 local-lvm
+```
+
+### 快完成了，加油！還差一點點。
+
+1. 將 Unused Disk 0 Add 
+2. Options 中，更改 Boot Order，取消前面兩個開機選項，將第三個，即是剛剛新加入的 HD 做為開機選項
+
+**在 QEMU Guest Agent 的地方 Enabled，這是為了將來啟動 HA 虛擬機後，能夠在畫面上看到 IP 位址**
+
+### 启动虚拟机
+等待系统运行
+- homeassitant的UI地址
+- homeassitant的健康检查地址
+
+
+ha-install -t
+
+### 登录homeassitant UI
+观察运行日志, 可能就阻塞在拉取镜像
+
+### 设置homeassistant的网关 DNS
+
+[Home Assistant虚拟机版，修改ip地址和网关](https://www.bilibili.com/read/cv17123823/)
+> 系统会默认自动分配一个新的ip地址给HA，这就导致了HA的新ip地址因为网关和DNS没有指向旁路由而无法上网
+{: .prompt-warning }
+
+**解决这个问题的方法就是手动设置ip地址，网关，DNS这些参数，把HA的网关和DNS指向旁路由，就能解决上网问题了。**
+
+```shell
+login
+nmcli dev status
+```
+
+```
+nmcli con edit "Suupervisor enp0s3"
+print ipv4
+set ipv4.addressess 192.168.31.*/24
+# 设置成旁路由的地址
+set ipv4.dns 192.168.31.198
+set ipv4.gateway 192.168.31.198
+print ipv4
+save
+quit
+```
+
+```
+nmcli con reload
+```
+
+[homeassistants双网卡，固定IP，dns和网关](https://www.bilibili.com/video/BV1yL4y137AX/?spm_id_from=333.976.0.0&vd_source=31e016075d5dc418e05dd62618989320)
+
+### 能做的就只有等待
+
+[当你看到System autofix complete](https://github.com/home-assistant/operating-system/issues/2794)
+
+> I am locking this issue as a simple "me-too" is not helpful here. The message [supervisor.resolution.fixup] System autofix complete is not your problem, that is just typically the last message of a successful Supervisor startup.
+{: .prompt-info }
+
+
+> I just waited, and it eventually started
+{: .prompt-info }
+
+
+
+### 接入家庭的智能设备
 接入品牌
 - 小米
 - 涂鸦
@@ -75,15 +158,14 @@ qm importdisk 编号 文件位置 local-lvm
 - Aqara
 - 自制的传感器
 
+
+### 备份部署的内容
+
+### 论坛参考
+
 [瀚思彼岸论坛](https://bbs.hassbian.com/thread-24065-1-1.html)
 
 冬瓜HA的改版系统
-
-打开QEMU代理
-
-查看进度
-ha-install -t
-
 
 
 
