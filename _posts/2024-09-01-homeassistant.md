@@ -66,7 +66,8 @@ haos_ova-9.3.qcow2.xz
 在 Network，Model 選擇 VirtIO（paravirtualized）或 Intel E1000 都可以。
 ```
 
-![img_2.png](img_2.png)
+![img_2.png](../assets/home_decoration/img_2.png)
+> 根据文章的层架结构放置静态图片
 
 **先忽略 Unused Disk 0，點到剛才的 Hard Disk（scsi0），detach 後 Remove。**
 
