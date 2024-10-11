@@ -150,6 +150,29 @@ nmcli con reload
 {: .prompt-info }
 
 
+---
+
+### 安装ssh命令行
+
+执行安装命令即可
+```shell
+wget -O - https://get.hacs.xyz | bash -
+```
+
+### 系统备份
+
+### 安装HACS
+[官方指导](https://www.hacs.xyz/docs/use/download/download/#to-download-hacs-ossupervised)
+> 安装后重启, 就出现了无法正常启动的情况
+{: .prompt-danger }
+
+
+[HACS绑定到github](https://www.hacs.xyz/docs/use/configuration/basic/#to-set-up-the-hacs-integration)
+
+### 安装xiaomi auto
+
+
+### 安装homekit
 
 ### 接入家庭的智能设备
 接入品牌
