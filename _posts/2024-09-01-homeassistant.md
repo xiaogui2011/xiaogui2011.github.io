@@ -15,6 +15,8 @@ img: 1.jpg
 
 [智能家居2.0 . 米家天猫如何接入苹果HomeKit . Home Bridge . Home Assistant . 使用教程](https://www.bilibili.com/video/BV1pb4y1B7c8/?spm_id_from=333.999.0.0)
 
+[PVE虚拟机安装Homeassistant](https://www.bilibili.com/video/BV1oZ421e7L9/?spm_id_from=333.337.search-card.all.click&vd_source=31e016075d5dc418e05dd62618989320)
+
 
 ## HomeKit 
 
