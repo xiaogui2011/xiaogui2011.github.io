@@ -145,12 +145,14 @@ pwa:
     # Usually its value is the `baseurl` of another website that
     # shares the same domain name as the current website.
     deny_paths:
+      - "https://fonts.googleapis.com/*"
+      - "https://fonts.gstatic.com/*"
       # - "/example"  # URLs match `<SITE_URL>/example/*` will not be cached by the PWA
 
 paginate: 10
 
 # The base URL of your site
-baseurl: ""
+baseurl: "/xiaogui2011.github.io"
 
 # ------------ The following options are not recommended to be modified ------------------
 
