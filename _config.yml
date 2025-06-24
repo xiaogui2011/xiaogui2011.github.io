@@ -53,6 +53,10 @@ webmaster_verifications:
   baidu: # fill in your Baidu verification code
   facebook: # fill in your Facebook verification code
 
+# 2025年06月24日11:14:41
+include:
+  - assets/js/data/search.json
+
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
