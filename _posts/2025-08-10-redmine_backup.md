@@ -97,3 +97,7 @@ cd /volume1/docker/redmine/backups/ & python -m http.server 8888
 ```
 
 数据最后放到icloud里
+
+```shell
+cd /volume1/docker/redmine/backups/ & python -m http.server 8888
+```
